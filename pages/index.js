@@ -37,7 +37,7 @@ function HomePage({ products }) {
 }
 
 export const getServerSideProps = async (context) => {
-    const { data: products } = await axios.get(`${NEXT_PAGE}/api/products/1`)
+    const { data: products } = await axios.get('https://crudnext-mu.vercel.app//api/products/1')
     return {
         props: {
             products,
