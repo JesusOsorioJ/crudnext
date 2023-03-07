@@ -7,7 +7,6 @@ import {
     DB_PORT
   } from './config'
   
-
 const pool = createPool({
     user: DB_USER,
     password: DB_PASSWORD,
