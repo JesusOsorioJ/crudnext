@@ -1,6 +1,7 @@
 import { ProductForm } from '../components/productForm';
 import axios from 'axios';
 import { useState } from 'react'
+import { NEXT_PAGE } from '../config/config'
 
 function HomePage({ products }) {
     const [ details, setDetails] = useState({name:null,description:"",price:""})
@@ -36,7 +37,7 @@ function HomePage({ products }) {
 }
 
 export const getServerSideProps = async (context) => {
-    const { data: products } = await axios.get("http://localhost:3000/api/products/1")
+    const { data: products } = await axios.get(`${NEXT_PAGE}/api/products/1`)
     return {
         props: {
             products,
