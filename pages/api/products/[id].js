@@ -19,7 +19,7 @@ const getproducts = async (req, res) => {
         const [result] = await pool.query('SELECT * FROM product')
         return res.status(200).json(result)
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(500).json({ message: error})
     }
 }
 
