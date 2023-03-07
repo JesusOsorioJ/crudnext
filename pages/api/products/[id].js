@@ -15,34 +15,46 @@ export default async function handler(req, res) {
 }
 
 const getproducts = async (req, res) => {
-    const [result] = await pool.query('SELECT * FROM product')
-    return res.status(200).json(result)
+    try {
+        const [result] = await pool.query('SELECT * FROM product')
+        return res.status(200).json(result)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 }
 
 const saveProduct = async (req, res) => {
     const { name, description, price } = req.body;
-    const [result] = await pool.query("INSERT INTO product SET ?", {
-        name, description, price
-    });
-    return res.status(200).json({ name, price, description, id: result.insertId })
+    try {
+        const [result] = await pool.query("INSERT INTO product SET ?", {
+            name, description, price
+        });
+        return res.status(200).json({ name, price, description, id: result.insertId })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+
 }
 
 const deleteProduct = async (req, res) => {
     const { id } = req.query;
-    const [result] = await pool.query("DELETE FROM product WHERE id = ?",
-        [id]);
-    return res.status(204).json()
+    try {
+        await pool.query("DELETE FROM product WHERE id = ?",
+            [id]);
+        return res.status(204).json()
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 }
 
 const updateProduct = async (req, res) => {
     const { id } = req.query;
-    console.log("dsdwdgggggggggggggr");
     const { name, description, price } = req.body
     try {
-        const [result] = await pool.query("UPDATE product SET name = ?, description = ?, price = ? WHERE id = ?",
-            [ name, description, price , id]);
+        await pool.query("UPDATE product SET name = ?, description = ?, price = ? WHERE id = ?",
+            [name, description, price, id]);
         return res.status(204).json()
     } catch (error) {
-        console.log(error.message)
+        res.status(500).json({ message: error.message })
     }
 }

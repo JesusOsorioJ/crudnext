@@ -7,7 +7,6 @@ export function ProductForm({ data,setDetails }) {
     const [product, setProduct] = useState({ ...data })
     const [error, setError] = useState()
 
-
     const handlerOnChange = (e) => {
         const { value, name } = e.target
         setError()
@@ -17,7 +16,7 @@ export function ProductForm({ data,setDetails }) {
     const router = useRouter()
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if( product.name == "" || product.price == "" || product.description == "" ){
+        if( product.name == "" || product.price.length == 0 || product.description == "" ){
             setError(["Please enter all input","Fill each input"]) 
         }else{
             if (data?.name) {
@@ -78,7 +77,7 @@ export function ProductForm({ data,setDetails }) {
                     <button className="bg-red-400 hover:bg-red-600 text-gray-100 py-2 px-3 max-w-[10rem]" 
                     onClick={handlerOnDelete}>Eliminate</button>:
                     <button className="bg-red-400 hover:bg-red-600 text-gray-100 py-2 px-3 max-w-[10rem]"
-                    onClick={()=>(setProduct({}))}>Cancelar</button>}
+                    onClick={()=>setDetails({})}>Cancelar</button>}
                 <button className="bg-green-400 hover:bg-green-600 text-gray-100 py-2 px-3 max-w-[10rem]">
                     {data?.name? "update products" : "Save products"}
                 </button>
